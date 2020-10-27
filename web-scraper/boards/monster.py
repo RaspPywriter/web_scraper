@@ -101,16 +101,20 @@ class MonsterJobs:
                 for b in i:
                     # so inside the list, i'm removing the tags/formatting
                     tst2 = ''
-                    if type(b) != str:
-                        test = b.text.strip()
-                        tst2 = ''.join(test)
+                        if type(b) != str:
+                            test = b.text.strip()
+                            tst2 = ''.join(test)
 
-                    else:
-                        continue
+                        else:
+                            continue
 
-                    jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=tst2)
-                    jobs.save()
-
+                        jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=tst2)
+                        try:
+                            jobs.save()
+                    
+                        except NotUniqueError as e:
+                            continue
+                    
 
 
             return (description_element, str(description_element))
