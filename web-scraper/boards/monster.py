@@ -93,22 +93,26 @@ class MonsterJobs:
             t = title.text.strip()
             c = company.text.strip()
             l = location.text.strip()
+            date = datetime.now()
 
             description_element = soup.select('#main-content > div > div > div > div.container.job-body-container > div > div.job-description.col-md-8.col-sm-12.order-2.order-sm-2.order-md-1 > div')
-            # this element is successfully pulling data, however, the formatting is terrible
+            # this element is successfully pulling data, but there are characters that cause it to fail
             for i in description_element:
-                # so i'm going into the element, but the items are stored in a list
-                for b in i:
-                    # so inside the list, i'm removing the tags/formatting
-                    tst2 = ''
-                        if type(b) != str:
-                            test = b.text.strip()
-                            tst2 = ''.join(test)
+                # check that the element is a string 
+                for desc in i:
+                   
+                    # removing the tags/formatting
+                    desc2 = ''
+                        if type(desc) != str:
+                            #pulling in the string desc from the first if statement
+                            descStr = desc.text.strip()
+                            desc2 = ''.join(descStr)
+                            desc2 = desc2.lower()
 
                         else:
                             continue
 
-                        jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=tst2)
+                        jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=desc2,date=date)
                         try:
                             jobs.save()
                     
