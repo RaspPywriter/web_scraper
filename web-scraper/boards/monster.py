@@ -97,29 +97,19 @@ class MonsterJobs:
 
             description_element = soup.select('#main-content > div > div > div > div.container.job-body-container > div > div.job-description.col-md-8.col-sm-12.order-2.order-sm-2.order-md-1 > div')
             # this element is successfully pulling data, but there are characters that cause it to fail
-            for i in description_element:
-                # check that the element is a string 
+                        for i in description_element:
+                # removing characters and joining to a string
+                descStr = ''
                 for desc in i:
-                   
-                    # removing the tags/formatting
-                    desc2 = ''
-                        if type(desc) != str:
-                            #pulling in the string desc from the first if statement
-                            descStr = desc.text.strip()
-                            desc2 = ''.join(descStr)
-                            desc2 = desc2.lower()
 
-                        else:
-                            continue
+                    descStrip=desc.text.strip()
+                    descStr=''.join(descStrip)
+                    descStr=descStr.lower()
 
-                        jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=desc2,date=date)
-                        try:
-                            jobs.save()
-                    
-                        except NotUniqueError as e:
-                            continue
-                    
+                    jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=descStr,date=date)
+                    try:
+                        jobs.save()
+                    except NotUniqueError as e:
+                        continue
 
-
-            return (description_element, str(description_element))
-    
+                return (description_element, str(description_element))
