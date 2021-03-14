@@ -4,16 +4,15 @@ Change the parameters.txt file to be whatever job title you want to search (as i
 
 Example:
 Software Engineer,software-engineer,new-york</br>
-Chef,chef,memphis
-
-
-The fields that are scraped from the project are:
-Date
-Search Term (taken from parmeters.txt)
-Title
-Company
-Location
-Description
+Chef,chef,memphis</br>
+</br>
+The fields that are scraped from the project are:</br>
+Date</br>
+Search Term (taken from parmeters.txt)</br>
+Title</br>
+Company</br>
+Location</br>
+Description</br>
 
 
 
