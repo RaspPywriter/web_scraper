@@ -15,15 +15,14 @@ class MonsterJobs:
         self.url = url
         self.term = term
         self.helpers = HttpHelpers()
-    def get(self, term):
 
+    def get(self, term):
         page = self.helpers.download_page(self.url)
         if page is None:
             sys.exit('There was a monster downloading the monster jobs webpage. cannot continue further, so fix this first')
+        monster_jobs = self.__parse_index(page)
 
-        monster_jobs = self.__parse_index(page, term)
-
-    def __parse_index(self, htmlcontent, term):
+    def __parse_index(self, htmlcontent):
         soup = BeautifulSoup(htmlcontent, 'html.parser')
         jobs_container = soup.find('div', {'class': 'results-list'})
         try:
@@ -31,16 +30,14 @@ class MonsterJobs:
         except:
             print('job items is not found')
             return[]
-
         if job_items is None or len(job_items) == 0:
+            print('zero job_items')
             return []
-
         for job_elem in jobs_container:
             job_info = job_elem.find('div', class_='title-company-location')
         self.cleanData(job_info,soup)
 
     def cleanData(self, job_info, soup):
-
             for i in job_info:
             # from the job_elem section you pull out the key words
                 title_elem = job_info.find('h2', class_='card-title')
@@ -48,19 +45,15 @@ class MonsterJobs:
                 location=job_info.find('span',class_='card-job-location')
                 if None in (title_elem, company_elem, location):
                     continue
-                t=title_elem.text.strip()
-                t=t.lower()
-                c =company_elem.text.strip()
-                c=c.lower()
-                l=location.text.strip()
-                l=l.lower()
+                t=title_elem.text.strip().lower()
+                c =company_elem.text.strip().lower()
+                l=location.text.strip().lower()
                 date = datetime.now()
                 job_description=soup.find('div', attrs={'name': 'sanitizedHtml'})
-                descStr= job_description.text.strip()
+                descStr= job_description.text.strip().lower()
             self.database(self.term,t,c,l,descStr,date)
 
     def database(self,term,t,c,l,descStr,date):
-
                 jobs = Jobs(term=term, jobTitle=t, jobCompany=c, jobLocation=l,jobDesc=descStr,date=date)
                 try:
                     jobs.save()
