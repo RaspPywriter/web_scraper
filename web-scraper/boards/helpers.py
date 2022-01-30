@@ -2,10 +2,10 @@ import requests
 from requests.exceptions import HTTPError
 
 class HttpHelpers:
-    # tries to download the page from the url
+     
     def __init__(self):
         self.session = requests.Session()
-
+    # tries to download the page from the url
     def download_page(self, url):
         try:
             response = self.session.get(url)
