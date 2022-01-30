@@ -47,6 +47,7 @@ class MonsterJobs:
                 location=job_info.find('span',class_='card-job-location')
                 if None in (title_elem, company_elem, location):
                     continue
+                #making it all lowercase made it easier to spot duplicates
                 t=title_elem.text.strip().lower()
                 c =company_elem.text.strip().lower()
                 l=location.text.strip().lower()
