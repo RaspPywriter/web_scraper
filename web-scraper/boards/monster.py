@@ -23,7 +23,9 @@ class MonsterJobs:
         monster_jobs = self.__parse_index(page)
 
     def __parse_index(self, htmlcontent):
+        #downloading the content
         soup = BeautifulSoup(htmlcontent, 'html.parser')
+        #Using BeautifulSoup I pulled certain parts of the page that had the info I needed, specifically: job title, description, company, location
         jobs_container = soup.find('div', {'class': 'results-list'})
         try:
             job_items = jobs_container.find('h2', class_='card-title')
@@ -48,6 +50,7 @@ class MonsterJobs:
                 t=title_elem.text.strip().lower()
                 c =company_elem.text.strip().lower()
                 l=location.text.strip().lower()
+                #add the date
                 date = datetime.now()
                 job_description=soup.find('div', attrs={'name': 'sanitizedHtml'})
                 descStr= job_description.text.strip().lower()
