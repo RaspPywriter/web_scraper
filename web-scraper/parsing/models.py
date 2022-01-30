@@ -1,5 +1,5 @@
 import mongoengine
-
+#created the models for mongodb
 class Jobs(mongoengine.Document):
     term = mongoengine.StringField()
     jobTitle = mongoengine.StringField()
